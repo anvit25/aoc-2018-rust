@@ -10,7 +10,7 @@ pub mod day1;
 pub mod day2;
 pub mod day3;
 pub mod day4;
-
+pub mod day5;
 
 
 pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
@@ -35,12 +35,17 @@ pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
             println!("Day 4a: {}, Day 4b: {}", day4::day4a(), day4::day4b());
             Ok(())
         },
+        5 => {
+            download_input(day)?;
+            println!("Day 5a: {}, Day 5b: {}", day5::day5a(), day5::day5b());
+            Ok(())
+        },
         _ => Err("Day not implemented".into())
     }
 }
 
 pub fn run_all() -> Result<(), Box<dyn Error>> {
-    for day in 1..2 {
+    for day in 1..5 {
         run_day(day)?;
     }
     Ok(())
