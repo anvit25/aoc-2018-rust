@@ -3,50 +3,35 @@ use std::error::Error;
 use reqwest::blocking;
 use std::io::Write;
 use std::path::Path;
-// use paste::paste;
-
+use std::time::Instant;
 
 pub mod day1;
 pub mod day2;
 pub mod day3;
 pub mod day4;
 pub mod day5;
+pub mod day6;
 
 
 pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
+    download_input(day)?;
     match day {
-        1 => {
-            download_input(day)?;
-            println!("Day 1a: {}, Day 1b: {}", day1::day1a(), day1::day1b());
-            Ok(())
-        },
-        2 => {
-            download_input(day)?;
-            println!("Day 2a: {}, Day 2b: {}", day2::day2a(), day2::day2b());
-            Ok(())
-        },
-        3 => {
-            download_input(day)?;
-            println!("Day 3a: {}, Day 3b: {}", day3::day3a(), day3::day3b());
-            Ok(())
-        },
-        4 => {
-            download_input(day)?;
-            println!("Day 4a: {}, Day 4b: {}", day4::day4a(), day4::day4b());
-            Ok(())
-        },
-        5 => {
-            download_input(day)?;
-            println!("Day 5a: {}, Day 5b: {}", day5::day5a(), day5::day5b());
-            Ok(())
-        },
-        _ => Err("Day not implemented".into())
-    }
+        1 => println!("Day 1a: {}, Day 1b: {}", day1::day1a(), day1::day1b()),
+        2 => println!("Day 2a: {}, Day 2b: {}", day2::day2a(), day2::day2b()),
+        3 => println!("Day 3a: {}, Day 3b: {}", day3::day3a(), day3::day3b()),
+        4 => println!("Day 4a: {}, Day 4b: {}", day4::day4a(), day4::day4b()),
+        5 => println!("Day 5a: {}, Day 5b: {}", day5::day5a(), day5::day5b()),
+        6 => println!("Day 6a: {}, Day 6b: {}", day6::day6a(), day6::day6b()),
+        _ => {return Err("Day not implemented".into());}
+    };
+    Ok(())
 }
 
 pub fn run_all() -> Result<(), Box<dyn Error>> {
-    for day in 1..5 {
+    for day in 1..7 {
+        let now = Instant::now();
         run_day(day)?;
+        println!("Time: {}ms", now.elapsed().as_millis());
     }
     Ok(())
 }

@@ -9,9 +9,9 @@ fn react(a: char, b: char) -> bool {
     a != b && a.to_ascii_lowercase() == b.to_ascii_lowercase()
 }
 
-fn chain_destroy_at_index(polymer: &mut Vec<char>, index: usize) -> bool {
+fn chain_destroy_at_index(polymer: &mut Vec<char>, index: usize) {
     if index >= polymer.len() - 1 {
-        return false;
+        return;
     }
     if react(polymer[index], polymer[index + 1]) {
         polymer.remove(index);
@@ -20,7 +20,6 @@ fn chain_destroy_at_index(polymer: &mut Vec<char>, index: usize) -> bool {
             chain_destroy_at_index(polymer, index-1);
         }
     }
-    true 
 }
 
 fn chain_destroy(polymer: &mut Vec<char>) {
