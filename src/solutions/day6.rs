@@ -1,5 +1,6 @@
 use std::fs;
 use std::collections::HashMap;
+use std::cmp::Ordering::{Less, Equal, Greater};
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 struct Point {
@@ -33,10 +34,10 @@ fn read_input() -> Vec<Point> {
 
 
 fn border_points(points: &Vec<Point>) -> [i32; 4] {
-    let mut min_x = i32::max_value();
-    let mut min_y = i32::max_value();
-    let mut max_x = i32::min_value();
-    let mut max_y = i32::min_value();
+    let mut min_x = i32::MAX;
+    let mut min_y = i32::MAX;
+    let mut max_x = i32::MIN;
+    let mut max_y = i32::MIN;
     for point in points {
         if point.x < min_x {
             min_x = point.x;
@@ -61,22 +62,24 @@ pub fn day6a() -> usize {
     // let mut grid: Vec<Vec<Option<&Point>>> = vec![vec![None; (max_y - min_y + 1) as usize]; (max_x - min_x + 1) as usize];
     for x in min_x..=max_x {
         for y in min_y..=max_y {
-            let mut min_distance = i32::max_value();
+            let mut min_distance = i32::MAX;
             let mut closest_point = None;
             for point in points.iter() {
                 let distance = point.distance(&Point::new(x,y));
-                if distance < min_distance {
-                    min_distance = distance;
-                    closest_point = Some(point);
-                } else if distance == min_distance {
-                    closest_point = None;
+                match distance.cmp(&min_distance) {
+                    Less => {
+                        min_distance = distance;
+                        closest_point = Some(point);
+                    },
+                    Equal => {closest_point = None;},
+                    Greater => {}
                 }
             }
             if let Some(point) = closest_point {
-                let count = coverage.entry(&point).or_insert(0);
+                let count = coverage.entry(point).or_default();
                 *count += 1;
                 if x == min_x || x == max_x || y == min_y || y == max_y {
-                    *count = i32::min_value();
+                    *count = i32::MIN;
                 }
             }
         }
