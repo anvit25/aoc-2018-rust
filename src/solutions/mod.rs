@@ -13,6 +13,9 @@ pub mod day5;
 pub mod day6;
 pub mod day7;
 pub mod day8;
+pub mod day9;
+pub mod day10;
+pub mod day11;
 
 
 pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
@@ -26,6 +29,9 @@ pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
         6 => println!("Day 6a: {}, Day 6b: {}", day6::day6a(), day6::day6b()),
         7 => println!("Day 7a: {}, Day 7b: {}", day7::day7a(), day7::day7b()),
         8 => println!("Day 8a: {}, Day 8b: {}", day8::day8a(), day8::day8b()),
+        9 => println!("Day 9a: {}, Day 9b: {}", day9::day9a(), day9::day9b()),
+        10 => println!("Day 10a: {}, Day 10b: {}", day10::day10a(), day10::day10b()),
+        11 => println!("Day 11a: {}, Day 11b: {}", day11::day11a(), day11::day11b()),
         _ => {return Err("Day not implemented".into());}
     };
     Ok(())
