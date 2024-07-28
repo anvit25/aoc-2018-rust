@@ -54,8 +54,7 @@ fn read_input() -> (usize, usize) {
         .trim().to_string();
     let mut iter = input
         .split_whitespace()
-        .map(|x| x.parse())
-        .flat_map(|x| x);
+        .flat_map(|x| x.parse());
     (iter.next().unwrap(), iter.next().unwrap())
 }
 
@@ -74,7 +73,7 @@ fn play_game(players: usize, last_marble: usize) -> usize {
     let mut scores = vec![0; players];
     for (i, value) in (1..=last_marble).enumerate() {
         let player = i % players;
-        scores[player] += ring.insert(value as usize);
+        scores[player] += ring.insert(value);
     }
     *scores.iter().max().unwrap()
 }
