@@ -16,6 +16,9 @@ pub mod day8;
 pub mod day9;
 pub mod day10;
 pub mod day11;
+pub mod day12;
+pub mod day13;
+pub mod day14;
 
 
 pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
@@ -32,13 +35,16 @@ pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
         9 => println!("Day 9a: {}, Day 9b: {}", day9::day9a(), day9::day9b()),
         10 => println!("Day 10a: {}, Day 10b: {}", day10::day10a(), day10::day10b()),
         11 => println!("Day 11a: {}, Day 11b: {}", day11::day11a(), day11::day11b()),
+        12 => println!("Day 12a: {}, Day 12b: {}", day12::day12a(), day12::day12b()),
+        13 => println!("Day 13a: {}, Day 13b: {}", day13::day13a(), day13::day13b()),
+        14 => println!("Day 14a: {}, Day 14b: {}", day14::day14a(), day14::day14b()),
         _ => {return Err("Day not implemented".into());}
     };
     Ok(())
 }
 
 pub fn run_all() -> Result<(), Box<dyn Error>> {
-    for day in 1..12 {
+    for day in 1..14 {
         let now = Instant::now();
         run_day(day)?;
         println!("Time: {}ms", now.elapsed().as_millis());
