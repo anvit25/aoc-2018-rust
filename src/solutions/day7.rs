@@ -1,8 +1,9 @@
-use super::super::utils::{dag::DAG, workers::Worker};
+use super::super::utils::workers::Worker;
+use aoc_utils::graphs::dag::DAG;
 use std::collections::HashSet;
 use std::fs;
 
-fn read_input() -> DAG {
+fn read_input() -> DAG<char> {
     let input = fs::read_to_string("inputs/7.txt").unwrap();
     let mut dag = DAG::new();
     for line in input.lines() {

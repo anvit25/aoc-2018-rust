@@ -47,7 +47,7 @@ pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
 }
 
 pub fn run_all() -> Result<(), Box<dyn Error>> {
-    for day in 1..14 {
+    for day in 1..15 {
         let now = Instant::now();
         run_day(day)?;
         println!("Time: {}ms", now.elapsed().as_millis());
