@@ -1,5 +1,5 @@
-use std::fs;
 use std::collections::HashMap;
+use std::fs;
 
 pub fn day2a() -> i32 {
     let mut twos = 0;
@@ -27,7 +27,7 @@ pub fn day2a() -> i32 {
 pub fn day2b() -> String {
     let lines = read_input();
     for i in 0..lines.len() {
-        for j in i+1..lines.len() {
+        for j in i + 1..lines.len() {
             let mut diff = 0;
             let mut common = String::new();
             for (a, b) in lines[i].iter().zip(lines[j].iter()) {
@@ -47,5 +47,8 @@ pub fn day2b() -> String {
 
 fn read_input() -> Vec<Vec<char>> {
     let file = fs::read_to_string("inputs/2.txt").unwrap();
-    file.trim().split('\n').map(|x| x.chars().collect()).collect()
+    file.trim()
+        .split('\n')
+        .map(|x| x.chars().collect())
+        .collect()
 }

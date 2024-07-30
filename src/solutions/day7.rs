@@ -1,11 +1,8 @@
-use std::fs;
-use super::super::utils::{
-    dag::DAG,
-    workers::Worker
-};
+use super::super::utils::{dag::DAG, workers::Worker};
 use std::collections::HashSet;
+use std::fs;
 
-fn read_input() -> DAG{
+fn read_input() -> DAG {
     let input = fs::read_to_string("inputs/7.txt").unwrap();
     let mut dag = DAG::new();
     for line in input.lines() {
@@ -36,7 +33,7 @@ pub fn day7b() -> i32 {
     let mut started_nodes = HashSet::new();
 
     let mut any_busy = workers.iter().any(|w| !w.is_free());
-    
+
     while dag.root_nodes_exist() || any_busy {
         for worker in workers.iter_mut() {
             worker.work();
@@ -57,5 +54,5 @@ pub fn day7b() -> i32 {
         time += 1;
         any_busy = workers.iter().any(|w| !w.is_free());
     }
-    time-1
+    time - 1
 }

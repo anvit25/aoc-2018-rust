@@ -9,3 +9,4 @@ chrono = "0.4"
 regex = "1.10"
 time = "0.3"
 paste = "1.0"
+aoc-utils = {path = "../aoc-utils"}

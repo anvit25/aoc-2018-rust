@@ -9,7 +9,11 @@ impl State {
         let mut recipes = Vec::with_capacity(capacity + 11);
         recipes.push(3);
         recipes.push(7);
-        State { recipes, elf1: 0, elf2: 1 }
+        State {
+            recipes,
+            elf1: 0,
+            elf2: 1,
+        }
     }
 
     fn tick(&mut self) {
@@ -24,13 +28,13 @@ impl State {
 
     fn find(&mut self, pattern: &[u8]) -> usize {
         let n = pattern.len();
-        while self.recipes.len() < n + 1{
+        while self.recipes.len() < n + 1 {
             self.tick();
         }
         let mut start = 0;
         let mut end = start + n;
         let mut to_check = &self.recipes[start..end];
-        
+
         while to_check != pattern {
             if end == self.recipes.len() {
                 self.tick();
@@ -49,15 +53,20 @@ pub fn day14a() -> String {
     while state.recipes.len() < input + 10 {
         state.tick();
     }
-    return state.recipes[input..input + 10].iter().map(|x| x.to_string()).collect();
-    
+    return state.recipes[input..input + 10]
+        .iter()
+        .map(|x| x.to_string())
+        .collect();
 }
 
 pub fn day14b() -> String {
     let input = read_input();
     let input_n: usize = input.parse().unwrap();
     let mut state = State::new(input_n + 11);
-    let pattern = input.chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<u8>>();
+    let pattern = input
+        .chars()
+        .map(|c| c.to_digit(10).unwrap() as u8)
+        .collect::<Vec<u8>>();
     let ans = state.find(&pattern).to_string();
     // println!("{:?}", &state.recipes[..20]);
     ans
@@ -65,5 +74,7 @@ pub fn day14b() -> String {
 
 fn read_input() -> String {
     std::fs::read_to_string("inputs/14.txt")
-        .expect("Cannot read file").trim().to_string()
+        .expect("Cannot read file")
+        .trim()
+        .to_string()
 }

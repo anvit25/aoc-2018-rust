@@ -45,12 +45,17 @@ dependencies = [
 name = "aoc-rust-2018"
 version = "0.1.0"
 dependencies = [
+ "aoc-utils",
  "chrono",
  "paste",
  "regex",
  "reqwest",
  "time",
 ]
+
+[[package]]
+name = "aoc-utils"
+version = "0.1.0"
 
 [[package]]
 name = "atomic-waker"

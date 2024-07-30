@@ -6,7 +6,7 @@ impl SummedAreaTable {
     // This is O(n^2)
     fn new(grid: Vec<Vec<i32>>) -> SummedAreaTable {
         let mut table: Vec<Vec<i32>> = vec![vec![0; grid[0].len()]; grid.len()];
-        
+
         for x in 0..grid.len() {
             for y in 0..grid[0].len() {
                 let mut value = grid[x][y];
@@ -139,10 +139,13 @@ mod tests {
         assert_eq!(table.table[0][1], 33);
         assert_eq!(table.table[1][0], 43);
         assert_eq!(table.table[1][1], 71);
-        assert_eq!(table.table[2][2], 31+2+4+12+26+9+13+17+21);
+        assert_eq!(table.table[2][2], 31 + 2 + 4 + 12 + 26 + 9 + 13 + 17 + 21);
 
         assert_eq!(table.get(0, 0, 2), 71);
-        assert_eq!(table.get(1, 1, 2), 26+9+17+21);
-        assert_eq!(table.get(0, 3, 3), 33+5+36+10+29+25+22+20+18);
+        assert_eq!(table.get(1, 1, 2), 26 + 9 + 17 + 21);
+        assert_eq!(
+            table.get(0, 3, 3),
+            33 + 5 + 36 + 10 + 29 + 25 + 22 + 20 + 18
+        );
     }
 }

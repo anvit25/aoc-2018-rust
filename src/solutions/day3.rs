@@ -6,7 +6,7 @@ struct Claim {
     x: u32,
     y: u32,
     width: u32,
-    height: u32
+    height: u32,
 }
 
 impl Claim {
@@ -20,7 +20,13 @@ impl Claim {
         let y = parts[5].parse::<u32>().unwrap();
         let width = parts[7].parse::<u32>().unwrap();
         let height = parts[8].parse::<u32>().unwrap();
-        Claim { id, x, y, width, height }
+        Claim {
+            id,
+            x,
+            y,
+            width,
+            height,
+        }
     }
 
     fn max_x(&self) -> u32 {

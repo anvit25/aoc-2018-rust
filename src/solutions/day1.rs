@@ -24,5 +24,8 @@ pub fn day1b() -> i32 {
 
 fn read_input() -> Vec<i32> {
     let file = fs::read_to_string("inputs/1.txt").unwrap();
-    file.trim().split('\n').map(|x| x.parse::<i32>().unwrap()).collect()
+    file.trim()
+        .split('\n')
+        .map(|x| x.parse::<i32>().unwrap())
+        .collect()
 }

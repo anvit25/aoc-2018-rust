@@ -1,14 +1,17 @@
-use std::fmt::{Display, Formatter, Error, Debug};
+use std::fmt::{Debug, Display, Error, Formatter};
 
 #[derive(Copy, Clone)]
 pub struct Worker {
     node: Option<char>,
-    time_left: u32
+    time_left: u32,
 }
 
 impl Worker {
     pub fn new() -> Worker {
-        Worker {node: None, time_left: 0}
+        Worker {
+            node: None,
+            time_left: 0,
+        }
     }
 
     pub fn is_free(&self) -> bool {
@@ -67,4 +70,3 @@ impl Debug for Worker {
         write!(f, "({:?}, {})", self.node, self.time_left)
     }
 }
-

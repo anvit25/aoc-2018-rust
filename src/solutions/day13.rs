@@ -53,31 +53,29 @@ impl Cart {
                     Dir::Right => Dir::Down,
                 };
             }
-            Track::Intersection => {
-                match self.intersection {
-                    Intersection::Left => {
-                        self.dir = match self.dir {
-                            Dir::Up => Dir::Left,
-                            Dir::Down => Dir::Right,
-                            Dir::Left => Dir::Down,
-                            Dir::Right => Dir::Up,
-                        };
-                        self.intersection = Intersection::Straight;
-                    }
-                    Intersection::Straight => {
-                        self.intersection = Intersection::Right;
-                    }
-                    Intersection::Right => {
-                        self.dir = match self.dir {
-                            Dir::Up => Dir::Right,
-                            Dir::Down => Dir::Left,
-                            Dir::Left => Dir::Up,
-                            Dir::Right => Dir::Down,
-                        };
-                        self.intersection = Intersection::Left;
-                    }
+            Track::Intersection => match self.intersection {
+                Intersection::Left => {
+                    self.dir = match self.dir {
+                        Dir::Up => Dir::Left,
+                        Dir::Down => Dir::Right,
+                        Dir::Left => Dir::Down,
+                        Dir::Right => Dir::Up,
+                    };
+                    self.intersection = Intersection::Straight;
                 }
-            }
+                Intersection::Straight => {
+                    self.intersection = Intersection::Right;
+                }
+                Intersection::Right => {
+                    self.dir = match self.dir {
+                        Dir::Up => Dir::Right,
+                        Dir::Down => Dir::Left,
+                        Dir::Left => Dir::Up,
+                        Dir::Right => Dir::Down,
+                    };
+                    self.intersection = Intersection::Left;
+                }
+            },
             Track::Empty => panic!("Cart off the rails at {:?}", self.position),
         }
     }
@@ -120,19 +118,19 @@ impl World {
         World { carts, tracks }
     }
 
-    fn tick(&mut self, part1: bool) -> Option<(i32, i32)>{
+    fn tick(&mut self, part1: bool) -> Option<(i32, i32)> {
         if self.carts.len() == 1 && self.carts[0].moved {
             // println!("{} cars remaining", self.carts.len());
             return Some(self.carts[0].position);
         }
 
-        self.carts.sort_by_key(|cart| (cart.position.1, cart.position.0) );
-        let forbidden_positions: Vec<(i32, i32)> = self.carts
-            .iter().map(|cart| cart.position)
-            .collect();
+        self.carts
+            .sort_by_key(|cart| (cart.position.1, cart.position.0));
+        let forbidden_positions: Vec<(i32, i32)> =
+            self.carts.iter().map(|cart| cart.position).collect();
 
         let curr_cart = self.carts.iter_mut().find(|cart| !cart.moved);
-        
+
         if curr_cart.is_some() {
             let curr_cart = curr_cart.unwrap();
             let (mut x, mut y) = curr_cart.position;

@@ -7,7 +7,7 @@ struct Node {
 }
 
 impl Node {
-    fn read(nums: & mut impl Iterator<Item = i32>) -> Option<Node> {
+    fn read(nums: &mut impl Iterator<Item = i32>) -> Option<Node> {
         let n_children = nums.next()?;
         let n_metadata = nums.next()?;
         let mut children = Vec::new();
@@ -28,13 +28,16 @@ impl Node {
         if self.children.is_empty() {
             self.metadata.iter().sum()
         } else {
-            self.metadata.iter().map(|&i| {
-                if i == 0 {
-                    0
-                } else {
-                    self.children.get(i as usize - 1).map_or(0, |c| c.value2())
-                }
-            }).sum()
+            self.metadata
+                .iter()
+                .map(|&i| {
+                    if i == 0 {
+                        0
+                    } else {
+                        self.children.get(i as usize - 1).map_or(0, |c| c.value2())
+                    }
+                })
+                .sum()
         }
     }
 }
@@ -51,8 +54,12 @@ pub fn day8b() -> i32 {
 
 fn read_input() -> Node {
     let input = fs::read_to_string("inputs/8.txt")
-            .expect("Cannot read file")
-            .trim().to_string();
-    let nums: Vec<i32> = input.split_whitespace().map(|x| x.parse().unwrap()).collect();
+        .expect("Cannot read file")
+        .trim()
+        .to_string();
+    let nums: Vec<i32> = input
+        .split_whitespace()
+        .map(|x| x.parse().unwrap())
+        .collect();
     Node::read(&mut nums.iter().cloned()).unwrap()
 }

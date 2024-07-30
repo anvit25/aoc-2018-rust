@@ -1,14 +1,17 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::{HashMap, HashSet};
 
 #[derive(Debug)]
 pub struct Neighbors {
     parents: HashSet<char>,
-    children: HashSet<char>
+    children: HashSet<char>,
 }
 
 impl Neighbors {
     pub fn new() -> Neighbors {
-        Neighbors {parents: HashSet::new(), children: HashSet::new()}
+        Neighbors {
+            parents: HashSet::new(),
+            children: HashSet::new(),
+        }
     }
 
     pub fn add_parent(&mut self, parent: char) {
@@ -30,7 +33,6 @@ impl Neighbors {
     pub fn get_children(&self) -> &HashSet<char> {
         &self.children
     }
-    
 }
 
 impl Default for Neighbors {
@@ -41,11 +43,10 @@ impl Default for Neighbors {
 
 #[derive(Debug)]
 pub struct DAG {
-    nodes: HashMap<char, Neighbors>
+    nodes: HashMap<char, Neighbors>,
 }
 
 impl DAG {
-
     pub fn get_children(&self, node: char) -> Option<&HashSet<char>> {
         self.nodes.get(&node).map(Neighbors::get_children)
     }
@@ -62,7 +63,8 @@ impl DAG {
     }
 
     fn get_root_nodes(&self) -> HashSet<char> {
-        self.nodes.iter()
+        self.nodes
+            .iter()
             .filter(|(_, neigh)| neigh.is_root())
             .map(|(node, _)| *node)
             .collect()
@@ -76,20 +78,19 @@ impl DAG {
         self.get_root_nodes()
             .iter()
             .filter(|node| !except.contains(node))
-            .min().copied()
+            .min()
+            .copied()
     }
 
     pub fn new() -> DAG {
-        DAG {nodes: HashMap::new()}
+        DAG {
+            nodes: HashMap::new(),
+        }
     }
 
     pub fn add_edge(&mut self, from: char, to: char) {
-        self.nodes.entry(from)
-            .or_default()
-            .add_child(to);
-        self.nodes.entry(to)
-            .or_default()
-            .add_parent(from);
+        self.nodes.entry(from).or_default().add_child(to);
+        self.nodes.entry(to).or_default().add_parent(from);
     }
 }
 

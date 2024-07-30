@@ -14,8 +14,15 @@ struct Ring {
 impl Ring {
     fn new(size: usize) -> Ring {
         let mut marbles = Vec::with_capacity(size);
-        marbles.push(Marble { value: 0, prev_idx: 0, next_idx: 0 });
-        Ring { marbles, current_marble: 0 }
+        marbles.push(Marble {
+            value: 0,
+            prev_idx: 0,
+            next_idx: 0,
+        });
+        Ring {
+            marbles,
+            current_marble: 0,
+        }
     }
 
     fn insert(&mut self, value: usize) -> usize {
@@ -29,7 +36,11 @@ impl Ring {
         } else {
             let left_marble = self.marbles[self.current_marble].next_idx;
             let right_marble = self.marbles[left_marble].next_idx;
-            self.marbles.push(Marble { value, prev_idx: left_marble, next_idx: right_marble });
+            self.marbles.push(Marble {
+                value,
+                prev_idx: left_marble,
+                next_idx: right_marble,
+            });
             self.marbles[left_marble].next_idx = self.marbles.len() - 1;
             self.marbles[right_marble].prev_idx = self.marbles.len() - 1;
             self.current_marble = self.marbles.len() - 1;
@@ -51,10 +62,9 @@ impl Ring {
 fn read_input() -> (usize, usize) {
     let input = fs::read_to_string("inputs/9.txt")
         .expect("Cannot read file")
-        .trim().to_string();
-    let mut iter = input
-        .split_whitespace()
-        .flat_map(|x| x.parse());
+        .trim()
+        .to_string();
+    let mut iter = input.split_whitespace().flat_map(|x| x.parse());
     (iter.next().unwrap(), iter.next().unwrap())
 }
 

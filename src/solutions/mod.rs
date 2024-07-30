@@ -1,11 +1,17 @@
-use std::fs::{self, File};
-use std::error::Error;
 use reqwest::blocking;
+use std::error::Error;
+use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
 use std::time::Instant;
 
 pub mod day1;
+pub mod day10;
+pub mod day11;
+pub mod day12;
+pub mod day13;
+pub mod day14;
+pub mod day15;
 pub mod day2;
 pub mod day3;
 pub mod day4;
@@ -14,12 +20,6 @@ pub mod day6;
 pub mod day7;
 pub mod day8;
 pub mod day9;
-pub mod day10;
-pub mod day11;
-pub mod day12;
-pub mod day13;
-pub mod day14;
-
 
 pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
     download_input(day)?;
@@ -38,7 +38,10 @@ pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
         12 => println!("Day 12a: {}, Day 12b: {}", day12::day12a(), day12::day12b()),
         13 => println!("Day 13a: {}, Day 13b: {}", day13::day13a(), day13::day13b()),
         14 => println!("Day 14a: {}, Day 14b: {}", day14::day14a(), day14::day14b()),
-        _ => {return Err("Day not implemented".into());}
+        15 => println!("Day 15a: {}, Day 15b: {}", day15::day15a(), day15::day15b()),
+        _ => {
+            return Err("Day not implemented".into());
+        }
     };
     Ok(())
 }
@@ -56,13 +59,14 @@ fn download_input(day: u8) -> Result<String, Box<dyn Error>> {
     // read from the AOC_SESSION_COOKIE.PVT file
 
     if Path::exists(Path::new(&format!("inputs/{}.txt", day))) {
-        return Ok(format!("Input for Day {day} already exists"))
+        return Ok(format!("Input for Day {day} already exists"));
     }
-    
+
     let session_cookie = fs::read_to_string("AOC_SESSION_COOKIE.pvt")?;
     let url = format!("https://adventofcode.com/2018/day/{}/input", day);
     let client = blocking::Client::new();
-    let res = client.get(url)
+    let res = client
+        .get(url)
         .header("Cookie", format!("session={}", session_cookie))
         .send()?
         .text()?;

@@ -10,7 +10,12 @@ struct Point {
 
 impl Point {
     fn new(x: i32, y: i32, delta_x: i32, delta_y: i32) -> Point {
-        Point { x, y, delta_x, delta_y }
+        Point {
+            x,
+            y,
+            delta_x,
+            delta_y,
+        }
     }
 
     fn step(&mut self, steps: i32) {
@@ -102,7 +107,8 @@ pub fn day10b() -> i32 {
 fn read_input() -> Sky {
     let input = fs::read_to_string("inputs/10.txt")
         .expect("Cannot read file")
-        .trim().to_string();
+        .trim()
+        .to_string();
     let mut sky = Sky::new();
     for line in input.lines() {
         let parts: Vec<i32> = line

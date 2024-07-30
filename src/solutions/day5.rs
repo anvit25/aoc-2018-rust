@@ -17,7 +17,7 @@ fn chain_destroy_at_index(polymer: &mut Vec<char>, index: usize) {
         polymer.remove(index);
         polymer.remove(index);
         if index != 0 {
-            chain_destroy_at_index(polymer, index-1);
+            chain_destroy_at_index(polymer, index - 1);
         }
     }
 }
@@ -49,7 +49,6 @@ pub fn day5b() -> usize {
     }
     min_length
 }
-
 
 #[cfg(test)]
 mod tests {
