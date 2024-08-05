@@ -67,9 +67,7 @@ pub fn day14b() -> String {
         .chars()
         .map(|c| c.to_digit(10).unwrap() as u8)
         .collect::<Vec<u8>>();
-    let ans = state.find(&pattern).to_string();
-    // println!("{:?}", &state.recipes[..20]);
-    ans
+    state.find(&pattern).to_string()
 }
 
 fn read_input() -> String {

@@ -31,7 +31,7 @@ impl Garden {
     fn next_generation(&mut self) {
         let mut new_pots = VecDeque::new();
         for i in 2..self.pots.len() - 2 {
-            let pattern: Vec<bool> = self.pots.iter().skip(i - 2).take(5).map(|b| *b).collect();
+            let pattern: Vec<bool> = self.pots.iter().skip(i - 2).take(5).copied().collect();
             let pattern = bool_vec_u8(&pattern);
             let result = self.rules.get(&pattern).unwrap();
             new_pots.push_back(*result);
@@ -118,8 +118,7 @@ pub fn day12b() -> i64 {
         garden.next_generation();
     }
     let delta = find_diff(&mut garden.clone());
-    let ans = garden.sum() + delta * (n_gens - 200);
-    ans
+    garden.sum() + delta * (n_gens - 200)
 }
 
 fn find_diff(garden: &mut Garden) -> i64 {

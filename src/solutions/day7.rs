@@ -1,4 +1,4 @@
-use super::super::utils::workers::Worker;
+use crate::utils::workers::Worker;
 use aoc_utils::graphs::dag::DAG;
 use std::collections::HashSet;
 use std::fs;

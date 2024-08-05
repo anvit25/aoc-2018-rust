@@ -1,8 +1,5 @@
-use reqwest::blocking;
+use aoc_utils::io::download_input;
 use std::error::Error;
-use std::fs::{self, File};
-use std::io::Write;
-use std::path::Path;
 use std::time::Instant;
 
 pub mod day1;
@@ -11,7 +8,7 @@ pub mod day11;
 pub mod day12;
 pub mod day13;
 pub mod day14;
-pub mod day15;
+pub mod day16;
 pub mod day2;
 pub mod day3;
 pub mod day4;
@@ -22,7 +19,7 @@ pub mod day8;
 pub mod day9;
 
 pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
-    download_input(day)?;
+    download_input(day, 2018)?;
     match day {
         1 => println!("Day 1a: {}, Day 1b: {}", day1::day1a(), day1::day1b()),
         2 => println!("Day 2a: {}, Day 2b: {}", day2::day2a(), day2::day2b()),
@@ -38,7 +35,7 @@ pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
         12 => println!("Day 12a: {}, Day 12b: {}", day12::day12a(), day12::day12b()),
         13 => println!("Day 13a: {}, Day 13b: {}", day13::day13a(), day13::day13b()),
         14 => println!("Day 14a: {}, Day 14b: {}", day14::day14a(), day14::day14b()),
-        15 => println!("Day 15a: {}, Day 15b: {}", day15::day15a(), day15::day15b()),
+        16 => println!("Day 16a: {}, Day 16b: {}", day16::day16a(), day16::day16b()),
         _ => {
             return Err("Day not implemented".into());
         }
@@ -47,31 +44,13 @@ pub fn run_day(day: u8) -> Result<(), Box<dyn Error>> {
 }
 
 pub fn run_all() -> Result<(), Box<dyn Error>> {
-    for day in 1..15 {
+    for day in 1..17 {
+        if day == 15 {
+            continue;
+        }
         let now = Instant::now();
         run_day(day)?;
         println!("Time: {}ms", now.elapsed().as_millis());
     }
     Ok(())
-}
-
-fn download_input(day: u8) -> Result<String, Box<dyn Error>> {
-    // read from the AOC_SESSION_COOKIE.PVT file
-
-    if Path::exists(Path::new(&format!("inputs/{}.txt", day))) {
-        return Ok(format!("Input for Day {day} already exists"));
-    }
-
-    let session_cookie = fs::read_to_string("AOC_SESSION_COOKIE.pvt")?;
-    let url = format!("https://adventofcode.com/2018/day/{}/input", day);
-    let client = blocking::Client::new();
-    let res = client
-        .get(url)
-        .header("Cookie", format!("session={}", session_cookie))
-        .send()?
-        .text()?;
-
-    let mut file = File::create(format!("inputs/{}.txt", day))?;
-    file.write_all(res.as_bytes())?;
-    Ok(format!("Input for Day {day} downloaded successfully."))
 }
